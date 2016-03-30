@@ -1,8 +1,10 @@
+->![Docker logo](https://www.docker.com/sites/default/files/legal/small_v.png "Docker Logo")<-
+
+
 # Nginx Docker image for armhf devices
 
-
-Docker image to run Nginx on arm devices, built on a Raspberry Pi 3.  
-Base on alpine linux for a minimal image, perfect sized for Raspberry Pi.
+This is a Docker image used to run Nginx on arm devices, built on a Raspberry Pi 3.  
+Based on alpine linux for a minimal and clean image.
 
 # Getting the image
 
@@ -23,5 +25,24 @@ docker run -p 80:80 drakerin/alpine-nginx_armhf
 
 It starts Nginx with a default server redirecting to an index showing **"It Works"**.
 
-# Customizing configurations
+# Customizing configuration
 
+In order to provide your own configuration / virtual server(s) files, you will need to create a directory to share with the containers volume, e.g.:
+
+```
+mkdir /srv/nginx
+```
+
+(According to the FHS, /srv/ contains data for the **s**e**rv**ices provided by the system)
+
+If you only want to override the default nginx configuration, you can place the **nginx.conf** file in the newly created directory.
+If you want to add virtual servers, you first need to create a conf.d directory inside the first one, e.g.:
+```
+mkdir /srv/nginx/conf.d
+```
+Then you can place your configuration files in there.
+You can also add your websites files by creating a /var/www directory and placing your files there.
+
+```
+mkdir -P /srv/nginx/var/www
+```
