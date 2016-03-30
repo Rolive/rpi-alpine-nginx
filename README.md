@@ -1,4 +1,4 @@
-![Docker logo](https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_(container_engine)_logo.png "Docker Logo")
+<center>![Docker logo](https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_(container_engine)_logo.png "Docker Logo")</center>
 
 
 # Nginx Docker image for armhf devices
@@ -20,20 +20,21 @@ docker pull drakerin/alpine-nginx_armhf
 To start Nginx with the default settings : 
 
 ```
-docker run -p 80:80 drakerin/alpine-nginx_armhf
+docker run -p 80:80 -p 443:443 drakerin/alpine-nginx_armhf
 ```
 
 It starts Nginx with a default server redirecting to an index showing **"It Works"**.
 
 # Customizing configuration
 
+A script searches configuration or static websites files in the containers folder /tmp/conf_override before starting Nginx.
 In order to provide your own configuration / virtual server(s) files, you will need to create a directory to share with the containers volume, e.g.:
 
 ```
 mkdir /srv/nginx
 ```
 
-(According to the FHS, /srv/ contains data for the **s**e**rv**ices provided by the system)
+(According to the FHS, /srv/ contains data for the **s**e**rv**ices provided by the system so it's a good idea to place your files here)
 
 If you only want to override the default nginx configuration, you can place the **nginx.conf** file in the newly created directory.
 If you want to add virtual servers, you first need to create a conf.d directory inside the first one, e.g.:
@@ -45,4 +46,10 @@ You can also add your websites files by creating a /var/www directory and placin
 
 ```
 mkdir -P /srv/nginx/var/www
+cp -aR /var/www /srv/nginx/var/www
+```
+
+Then run the container with the good volumes :
+```
+docker run -p 80:80 -p 443:443 -v /srv/nginx:/tmp/conf_override drakerin/alpine-nginx_armhf
 ```
