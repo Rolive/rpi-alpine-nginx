@@ -1,4 +1,4 @@
-->![Docker logo](https://www.docker.com/sites/default/files/legal/small_v.png "Docker Logo")<-
+![Docker logo](https://upload.wikimedia.org/wikipedia/commons/7/79/Docker_(container_engine)_logo.png "Docker Logo")
 
 
 # Nginx Docker image for armhf devices
